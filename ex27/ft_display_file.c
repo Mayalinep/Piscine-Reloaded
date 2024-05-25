@@ -1,33 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_range.c                                         :+:      :+:    :+:   */
+/*   ft_display_file.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpelage <mpelage@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 13:32:27 by mpelage           #+#    #+#             */
-/*   Updated: 2024/05/19 13:33:06 by mpelage          ###   ########.fr       */
+/*   Created: 2024/05/19 16:26:44 by mpelage           #+#    #+#             */
+/*   Updated: 2024/05/19 16:26:48 by mpelage          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <fcntl.h>
 #include <unistd.h>
 
-int	*ft_range(int min, int max)
+int	main(int argc, char **argv)
 {
-	int	*range;
-	int	i;
+	int		fd;
+	char	c;
 
-	if (min >= max)
-		return (NULL);
-	range = malloc(sizeof(int) * (max - min));
-	if (!range)
-		return (NULL);
-	i = 0;
-	while (i < max - min)
+	if (argc != 2)
 	{
-		range[i] = min + i;
-		i++;
+		if (argc == 1)
+			write(2, "File name missing.\n", 19);
+		else if (argc > 2)
+			write(2, "Too many arguments.\n", 20);
+		return (1);
 	}
-	return (range);
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+	{
+		write(2, "Cannot read file.\n", 18);
+		return (1);
+	}
+	while (read(fd, &c, 1) != 0)
+		write(1, &c, 1);
+	close(fd);
+	return (0);
 }

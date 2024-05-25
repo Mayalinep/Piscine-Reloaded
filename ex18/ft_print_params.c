@@ -1,33 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_range.c                                         :+:      :+:    :+:   */
+/*   ft_print_params.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpelage <mpelage@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/19 13:32:27 by mpelage           #+#    #+#             */
-/*   Updated: 2024/05/19 13:33:06 by mpelage          ###   ########.fr       */
+/*   Created: 2024/05/14 17:28:25 by mpelage           #+#    #+#             */
+/*   Updated: 2024/05/19 16:59:14 by mpelage          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+/*
 #include <unistd.h>
 
-int	*ft_range(int min, int max)
+void	ft_putchar(char c)
 {
-	int	*range;
+	write(1, &c, 1);
+}
+*/
+
+void	ft_putchar(char c);
+
+void	print_name(char *str)
+{
+	while (*str)
+	{
+		ft_putchar(*str);
+		str++;
+	}
+}
+
+int	main(int argc, char **argv)
+{
 	int	i;
 
-	if (min >= max)
-		return (NULL);
-	range = malloc(sizeof(int) * (max - min));
-	if (!range)
-		return (NULL);
-	i = 0;
-	while (i < max - min)
+	i = 1;
+	while (argc > i)
 	{
-		range[i] = min + i;
+		print_name(argv[i]);
 		i++;
+		ft_putchar('\n');
 	}
-	return (range);
+	return (0);
 }

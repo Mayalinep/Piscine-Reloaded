@@ -3,81 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sort_params.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maya <maya@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mpelage <mpelage@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/18 21:30:41 by maya              #+#    #+#             */
-/*   Updated: 2024/05/18 22:29:00 by maya             ###   ########.fr       */
+/*   Created: 2024/05/14 18:08:38 by mpelage           #+#    #+#             */
+/*   Updated: 2024/05/19 17:00:44 by mpelage          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include <unistd.h>
 
-// Fonction pour afficher un caractère
-int ft_putchar(char c)
+void	ft_putchar(char c)
 {
-    write(1, &c, 1);
-    return (0);
+	write(1, &c, 1);
+}
+*/
+
+void	ft_putchar(char c);
+
+void	print_name(char *str)
+{
+	while (*str)
+	{
+		ft_putchar(*str);
+		str++;
+	}
 }
 
-// Fonction pour afficher une chaîne de caractères
-void ft_putstr(char *str)
+void	swap(char **str1, char **str2)
 {
-    int i = 0;
-    while (str[i] != '\0')
-    {
-        ft_putchar(str[i]);
-        i++;
-    }
+	char	*x;
+
+	x = *str1;
+	*str1 = *str2;
+	*str2 = x;
 }
 
-// Fonction pour comparer deux chaînes de caractères
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-    int i = 0;
-    while (s1[i] != '\0' && s1[i] == s2[i] && s2[i] != '\0')
-    {
-        i++;
-    }
-    return (s1[i] - s2[i]);
+	while (*s1 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
 }
 
-// Fonction pour trier les arguments en utilisant le tri à bulles
-void ft_sort_params(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    int i = 1;
-    int j;
-    char *temp;
+	int	i;
+	int	j;
 
-    while (i < argc - 1)
-    {
-        j = i + 1;
-        while (j < argc)
-        {
-            if (ft_strcmp(argv[i], argv[j]) > 0)
-            {
-                temp = argv[i];
-                argv[i] = argv[j];
-                argv[j] = temp;
-            }
-            j++;
-        }
-        i++;
-    }
-}
-
-int main(int argc, char **argv)
-{
-    if (argc > 1)
-    {
-        ft_sort_params(argc, argv);
-
-        int i = 1;
-        while (i < argc)
-        {
-            ft_putstr(argv[i]);
-            ft_putchar('\n');
-            i++;
-        }
-    }
-    return 0;
+	i = 1;
+	while (i < argc - 1)
+	{
+		j = i + 1;
+		while (j < argc)
+		{
+			if (ft_strcmp(argv[i], argv[j]) > 0)
+			{
+				swap(&argv[i], &argv[j]);
+			}
+			j++;
+		}
+		i++;
+	}
+	i = 1;
+	while (i < argc)
+	{
+		print_name(argv[i]);
+		i++;
+		ft_putchar('\n');
+	}
+	return (0);
 }
